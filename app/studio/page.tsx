@@ -11,123 +11,72 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Database, Table2Icon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import {
+  GetTables,
+  getColumnsData,
+  getRowsData,
+  getTablesAndRowCounts,
+} from "./actions";
+import Link from "next/link";
 
-const rows: GridRowsProp = [
-  {
-    id: 1,
-    col1: "72db33e0-7bf8-4de0-8299-c9072202434f",
-    col2: "bonheur15",
-    col3: "rumanzibonheur@gmail.com",
-    col4: null,
-    col5: "https://www.google.com",
-  },
-  {
-    id: 2,
-    col1: "ydfsf3e0-7bf8-4de0-sdf9-c9dfsf2434yf",
-    col2: "bonheur16",
-    col3: "rumanzibonheur@gmail.com",
-    col4: null,
-    col5: "https://www.google.com",
-  },
-  {
-    id: 3,
-    col1: "dfdsf-7sdhfhsffsfdfd0-c9072202434fff",
-    col2: "bonheur17",
-    col3: "rumanzibonheur@gmail.com",
-    col4: null,
-    col5: "https://www.google.com",
-  },
-];
-
-const columns: GridColDef[] = [
-  { field: "col1", headerName: "id", width: 150, editable: true },
-  { field: "col2", headerName: "name", width: 150, editable: true },
-  {
-    field: "col3",
-    headerName: "email",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "col4",
-    headerName: "emailVerified",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "col5",
-    headerName: "image",
-    width: 150,
-    editable: true,
-  },
-];
-
-export default function page() {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: {
+    table?: string;
+  };
+}) {
+  const TablesAndRowsCounts = await getTablesAndRowCounts();
+  const ColumnsData = await getColumnsData(searchParams.table);
+  const RowsData = await getRowsData(searchParams.table);
   return (
     <>
       <div className="fixed inset-0 w-[100vw] h-[100vh] p-[30px] gap-[20px] flex">
         <Card className="h-[100%] w-[300px] flex flex-col dark:bg-[#030711] p-[15px]">
           <div className="grid grid-rows-2 gap-[10px]">
-            <Card className="flex gap-[10px] p-[10px] cursor-pointer">
+            <Card className="flex gap-[10px] p-[10px] cursor-pointer opacity-[0.4]">
               <Database />
-              <div>SQL Runner</div>
+              <div>
+                SQL Runner <sub className="text-xs">(coming soon)</sub>
+              </div>
             </Card>
             <Card className="flex gap-[10px] p-[10px] cursor-pointer opacity-[0.4]">
               <Database />
               <div>
-                Master runner <sub className="text-xs">(coming soon)</sub>
+                Master Runner <sub className="text-xs">(coming soon)</sub>
               </div>
             </Card>
           </div>
-          <div className="py-[40px] h-[100%]">
+          <div className="py-[40px] px-[5px] h-[100%] flex flex-col relative overflow-hidden gap-[20px]">
             <Input
               type="search"
               placeholder="Search tables"
               className="w-[100%]"
             />
-            <div className="py-[10px] flex flex-col gap-[5px]">
-              <div className="flex p-[10px] justify-between cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>account</div>
-                </div>
-                <div className="px-[5px]">5</div>
-              </div>
-              <div className="flex p-[10px] justify-between cursor-pointer dark:bg-gray-900 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>user</div>
-                </div>
-                <div className="px-[5px]">5</div>
-              </div>
-              <div className="flex p-[10px] justify-between cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>sessions</div>
-                </div>
-                <div className="px-[5px]">5</div>
-              </div>
-              <div className="flex p-[10px] justify-between cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>authenticator</div>
-                </div>
-                <div className="px-[5px]">1</div>
-              </div>
-              <div className="flex p-[10px] justify-between cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>countries</div>
-                </div>
-                <div className="px-[5px]">5</div>
-              </div>
-              <div className="flex p-[10px] justify-between cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-[5px]">
-                <div className="flex gap-[10px]">
-                  <Table2Icon />
-                  <div>cities</div>
-                </div>
-                <div className="px-[5px]">20</div>
-              </div>
+            <div className="py-[10px] flex flex-col gap-[5px] overflow-auto h-[100%] relative">
+              {TablesAndRowsCounts.map((table) => {
+                return (
+                  <Link
+                    href={{
+                      query: {
+                        table: table.name,
+                      },
+                    }}
+                    key={table.name}
+                    className={`flex p-[10px] relative justify-between cursor-pointer rounded-[5px] ${
+                      table.name == searchParams.table
+                        ? "dark:bg-gray-900 bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
+                        : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    <div className="flex gap-[10px]">
+                      <Table2Icon />
+                      <div>{table.name}</div>
+                    </div>
+                    <div className="px-[5px]">{table.count}</div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className="">
@@ -137,7 +86,31 @@ export default function page() {
           </div>
         </Card>
         <Card className="h-[100%] w-[calc(100%_-_320px)] dark:bg-[#030711] p-[10px]">
-          <DataGrid checkboxSelection rows={rows} columns={columns} />
+          <DataGrid
+            checkboxSelection
+            // getRowId={(row) => {
+            //   return RowsData[0][Object.keys(RowsData[0])[0].toString()];
+            // }}
+            rows={RowsData.map((row, i) => {
+              if (Object.keys(row).find((p) => p == "id")) {
+                return {
+                  ...row,
+                };
+              } else {
+                return {
+                  ...row,
+                  id: i,
+                };
+              }
+            })}
+            columns={ColumnsData.map((column) => {
+              return {
+                field: column.name,
+                headerName: column.name,
+                editable: true,
+              };
+            })}
+          />
         </Card>
       </div>
     </>
