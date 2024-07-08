@@ -8,16 +8,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Database, Table2Icon } from "lucide-react";
+import { CopyIcon, Database, DatabaseIcon, Table2Icon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import {
   GetTables,
+  IsDatabaseConnected,
   getColumnsData,
   getRowsData,
   getTablesAndRowCounts,
+  storeConnectionParameters,
 } from "./actions";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
 
 export default async function page({
   searchParams,
@@ -29,11 +42,78 @@ export default async function page({
   const TablesAndRowsCounts = await getTablesAndRowCounts();
   const ColumnsData = await getColumnsData(searchParams.table);
   const RowsData = await getRowsData(searchParams.table);
+  const cookieStore = cookies();
+  const isDbConnected = await IsDatabaseConnected();
   return (
     <>
       <div className="fixed inset-0 w-[100vw] h-[100vh] p-[30px] gap-[20px] flex">
-        <Card className="h-[100%] w-[300px] flex flex-col dark:bg-[#030711] p-[15px]">
-          <div className="grid grid-rows-2 gap-[10px]">
+        <Card className="h-[100%] w-[300px] flex flex-col dark:bg-[#030711] p-[15px] relative pt-[70px]">
+          <div
+            className={`py-[10px] flex-col flex justify-center items-center text-white w-[100%] absolute rounded-t-[9px] left-0 right-0 font-bold h-fit top-[0px] mx-auto ${
+              isDbConnected ? "bg-green-400" : "bg-red-400"
+            }`}
+          >
+            <div> {isDbConnected ? "Connected" : "Disconnected"}</div>
+            <div className="flex text-xs max-w-[80%] h-fit items-center">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <div className="truncate ... px-[10px] py-[5px] bg-[#08080828] rounded-[5px] font-normal hover:bg-[#08080850] transition-all cursor-pointer">
+                    {cookieStore.get("connection_string")?.value}
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Master Database Studio</DialogTitle>
+                    <DialogDescription>
+                      <form action={storeConnectionParameters}>
+                        <div className="py-[10px]">Choose Database Type</div>
+                        <div className="flex gap-[10px] items-center">
+                          <Card className="p-[20px] flex flex-col items-center w-fit h-fit cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <DatabaseIcon />
+                            <div className="">Mysql</div>
+                          </Card>
+                          <Card className="p-[20px] flex flex-col items-center opacity-[0.5] h-fit cursor-not-allowed">
+                            <DatabaseIcon />
+                            <div>Mongo</div>
+                          </Card>
+                          <Card className="p-[20px] flex flex-col items-center opacity-[0.5] h-fit cursor-not-allowed">
+                            <DatabaseIcon />
+                            <div>Postgres</div>
+                          </Card>
+                          <Card className="p-[20px] flex flex-col items-center w-[100%] opacity-[0.5] h-fit cursor-not-allowed">
+                            <div>More (soon)</div>
+                          </Card>
+                        </div>
+                        <div className="py-[20px]">
+                          <div className="grid gap-[15px] w-full items-center ">
+                            <Label htmlFor="connection_string">
+                              Connection String
+                            </Label>
+                            <Input
+                              type="text"
+                              id="connection_string"
+                              name="connection_string"
+                              defaultValue={
+                                cookieStore.get("connection_string")?.value
+                              }
+                              placeholder="mysql://root:password@localhost:3306/db_test"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-[20px] justify-center">
+                          <Button type="submit">Connect</Button>
+                          <Button variant={"outline"} disabled>
+                            Test Connection
+                          </Button>
+                        </div>
+                      </form>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
+          <div className="grid grid-rows-2 gap-[10px] pt-[10px]">
             <Card className="flex gap-[10px] p-[10px] cursor-pointer opacity-[0.4]">
               <Database />
               <div>
@@ -88,9 +168,6 @@ export default async function page({
         <Card className="h-[100%] w-[calc(100%_-_320px)] dark:bg-[#030711] p-[10px]">
           <DataGrid
             checkboxSelection
-            // getRowId={(row) => {
-            //   return RowsData[0][Object.keys(RowsData[0])[0].toString()];
-            // }}
             rows={RowsData.map((row, i) => {
               if (Object.keys(row).find((p) => p == "id")) {
                 return {
