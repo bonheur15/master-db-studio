@@ -21,7 +21,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             Unified Database Viewer: Seamlessly manage Mongo, MySQL, and Postgres.
-          </motion.h1>
+        </motion.h1>
           {/* Replaced paragraph with a grid of features */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 my-8 lg:my-12 sm:px-16 xl:px-48"
