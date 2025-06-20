@@ -1,6 +1,9 @@
+"use client"; // Required for framer-motion
+
 import Navbar from "@/components/navbar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion'; // Import motion
 
 export default function Home() {
   return (
@@ -10,13 +13,47 @@ export default function Home() {
         {/* The div below previously had padding/layout classes, moved them to the section tag above */}
         <div>
           {/* Alert banner removed */}
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+          <motion.h1
+            className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             Unified Database Viewer: Seamlessly manage Mongo, MySQL, and Postgres.
-          </h1>
-          <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-            Experience a consistent interface for all your databases. Utilize our Master DB Runner for SQL-like commands across any supported database. Your connection strings are stored securely on your local machine – we never see them. It's free, open-source, and you can even host it yourself!
-          </p>
-          <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+          </motion.h1>
+          {/* Replaced paragraph with a grid of features */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 my-8 lg:my-12 sm:px-16 xl:px-48"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="flex items-start space-x-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary flex-shrink-0"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" /></svg>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400 text-left">Consistent interface for Mongo, MySQL, & Postgres.</span>
+            </div>
+            <div className="flex items-start space-x-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary flex-shrink-0"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400 text-left">Master DB Runner: SQL-like commands across databases.</span>
+            </div>
+            <div className="flex items-start space-x-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary flex-shrink-0"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622A11.99 11.99 0 0 0 18.402 6a11.959 11.959 0 0 1-1.598-1.036A11.99 11.99 0 0 0 12 2.25c-2.305 0-4.47-.612-6.402-1.686Z" /></svg>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400 text-left">Secure: Connection strings stored locally, never on our servers.</span>
+            </div>
+            <div className="flex items-start space-x-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary flex-shrink-0"><path strokeLinecap="round" strokeLinejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400 text-left">Free, Open-Source, and Self-Hostable.</span>
+            </div>
+          </motion.div>
+          <motion.div
+            className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <Button asChild className="inline-flex justify-center items-center py-3 px-5 text-base font-medium">
               <a href="/studio">Try It Now
               {/* SVG is part of the button's visual presentation, not a separate element to be wrapped by <a> */}
@@ -59,7 +96,7 @@ export default function Home() {
 
             <LinkGroup header="Resources">
               <NavLink link="#" label="Documentation" />
-              <NavLink link="#" label="GitHub" />
+              <NavLink link="#" icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>} label="GitHub" />
               <NavLink link="#" label="Report a Bug" />
               <NavLink link="#" label="Feature Request" />
             </LinkGroup>
@@ -69,8 +106,8 @@ export default function Home() {
               {/* Removed "About Us" and "Success History", "Setting & Privacy" as they might not be relevant yet */}
             </LinkGroup>
             <LinkGroup header="Community"> {/* Changed header from "Quick Links" */}
-              <NavLink link="#" label="Discord" /> {/* Assuming Discord link, add if available */}
-              <NavLink link="#" label="Twitter" /> {/* Assuming Twitter link, add if available */}
+              <NavLink link="#" icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-2.184-1.253-1.254-1.465a9.75 9.75 0 0 1-1.305-.112c-.03-.004-.06-.008-.09-.012a9.75 9.75 0 0 1-3.273-2.127M3 14.25c.243.97.936 1.753 1.826 2.063a9.753 9.753 0 0 0 3.613 1.099c.528.072 1.07.124 1.618.159l2.184 1.254 1.254 1.465a9.753 9.753 0 0 0 1.305.112c.03.004.06.008.09.012a9.754 9.754 0 0 0 3.273 2.127m-15.406-9.523c.884-.284 1.5-1.128 1.5-2.097V6.386c0-1.136.847-2.1 1.98-2.193.34-.027-.68-.052 1.02-.072V.75l2.184 1.253 1.254 1.465A9.75 9.75 0 0 1 13.555 4c.03.004.06.008.09.012a9.75 9.75 0 0 1 3.273 2.127" /></svg>} label="Discord" /> {/* Assuming Discord link, add if available */}
+              <NavLink link="#" icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688 0-1.25-.561-1.25-1.25V6.75h2.5v7.84c0 .688-.562 1.25-1.25 1.25ZM10.34 15.84H5.75c-.621 0-1.125-.504-1.125-1.125V9.994c0-.996.621-1.829 1.481-2.154l1.808-.602a1.125 1.125 0 0 1 1.296.959V15.84Zm0 0V9.153a4.125 4.125 0 0 0-3.214-4.004C6.19 4.92 5 5.998 5 7.218V14.72c0 .206.168.374.375.374h4.965Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c.688 0 1.25-.561 1.25-1.25V6.75h-2.5v7.84c0 .688.562 1.25 1.25 1.25Zm0 0h4.585c.621 0 1.125-.504 1.125-1.125V9.995c0-.996-.621-1.828-1.481-2.153l-1.808-.602a1.125 1.125 0 0 0-1.296.958V15.84Zm0 0V9.153a4.125 4.125 0 0 1 3.214-4.004c.966-.229 2.044.447 2.044 1.667V14.72c0 .206-.168.374-.375.374h-4.965Z" /></svg>} label="Twitter" /> {/* Assuming Twitter link, add if available */}
               {/* Removed "Premium Support", "Our Services", "Know Our Team", "Download App" */}
             </LinkGroup>
 
@@ -262,6 +299,7 @@ function LinkGroup({
 }: {
   children: React.ReactNode;
   header: string;
+  // icon?: React.ReactNode; // Removed incorrect icon prop from LinkGroup
 }) {
   return (
     <>
@@ -277,13 +315,14 @@ function LinkGroup({
   );
 }
 
-function NavLink({ link, label }: { link: string; label: string }) {
+function NavLink({ link, label, icon }: { link: string; label: string; icon?: React.ReactNode; }) {
   return (
     <li>
       <a
         href={link}
-        className="inline-block text-base leading-loose text-body-color hover:text-primary dark:text-dark-6"
+        className="inline-flex items-center text-base leading-loose text-body-color hover:text-primary dark:text-dark-6" // Added inline-flex items-center
       >
+        {icon && <span className="mr-2">{icon}</span>}
         {label}
       </a>
     </li>
