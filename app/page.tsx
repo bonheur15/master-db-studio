@@ -14,7 +14,7 @@ export default function Home() {
             Unified Database Viewer: Seamlessly manage Mongo, MySQL, and Postgres.
           </h1>
           <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-            Experience a consistent interface for all your databases. Utilize our Master DB Runner for SQL-like commands across any supported database. Your connection strings are stored securely on your local machine – we never see them. It's free, open-source, and you can even host it yourself!
+            Experience a consistent interface for all your databases. Utilize our Master DB Runner for SQL-like commands across any supported database. Your connection strings are stored securely on your local machine – we never see them. It&apos;s free, open-source, and you can even host it yourself!
           </p>
           <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <Button asChild className="inline-flex justify-center items-center py-3 px-5 text-base font-medium">
