@@ -454,7 +454,7 @@ export default function Page() {
             //   },
             // }}
             checkboxSelection
-            rows={RowsData.map((row, i) => {
+            rows={rowsData.map((row, i) => {
               if (Object.keys(row).find((p) => p == "id")) {
                 return {
                   ...row,
