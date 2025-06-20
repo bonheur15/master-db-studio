@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'; // Import motion
 
 export default function Home() {
   return (
-    <>
+    <div>
       <Navbar />
       <section className="glass-effect py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         {/* The div below previously had padding/layout classes, moved them to the section tag above */}
@@ -247,7 +247,7 @@ export default function Home() {
           </span>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 
