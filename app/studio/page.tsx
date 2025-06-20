@@ -15,11 +15,6 @@ import { Input } from "@/components/ui/input";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import {
   GetTables,
-  IsDatabaseConnected,
-  getColumnsData,
-  getRowsData,
-  getTablesAndRowCounts,
-  storeConnectionParameters,
 } from "./actions";
 import Link from "next/link";
 import {
