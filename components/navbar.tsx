@@ -11,14 +11,14 @@ export default function Navbar() {
       <header className={`glass-effect flex w-full items-center`}> {/* Added glass-effect, removed bg-white dark:bg-dark */}
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="w-60 max-w-full px-4">
-              <a href="/#" className="block w-full py-5">
-                <img src="/logo.png" alt="logo" className="dark:hidden" />
-                <img
-                  src="/logo.png"
-                  alt="logo"
-                  className="hidden dark:block invert"
-                />
+            <div className="w-60 max-w-full px-4 flex items-center"> {/* Added flex and items-center */}
+              <a href="/#" className="block w-full py-5 text-2xl"> {/* Increased text size for icon */}
+                {/* Database Icon (using a simple SVG, replace with your preferred icon if any) */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
               </a>
             </div>
             <div className="flex w-full items-center justify-between px-4">
@@ -49,18 +49,7 @@ export default function Navbar() {
                   </ul>
                 </nav>
               </div>
-              <div className="hidden justify-end pr-16 sm:flex lg:pr-0 gap-[20px]">
-                <Button
-                  variant={"outline"}
-                  className="px-7 py-3 text-base font-medium"
-                >
-                  Sign in
-                </Button>
-
-                <Button className="rounded-md  px-7 py-3 text-base font-medium">
-                  Sign Up
-                </Button>
-              </div>
+              {/* Removed Sign in and Sign Up buttons */}
             </div>
             <div>
               <ThemeToggle />
