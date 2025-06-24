@@ -86,3 +86,15 @@
     background-color: rgba(0, 0, 0, 0.2); /* Dark theme base */
     border: 1px solid rgba(255, 255, 255, 0.1); /* Adjusted border for dark theme */
   }
+
+  .footer-aluminum {
+    background-color: #f0f0f0; /* Light gray - base for aluminum */
+    color: #333; /* Dark gray text for contrast */
+    border-top: 1px solid #cccccc; /* Subtle top border */
+  }
+
+  .dark .footer-aluminum {
+    background-color: #4a4a4a; /* Darker gray for dark mode aluminum */
+    color: #e0e0e0; /* Lighter text for dark mode */
+    border-top: 1px solid #5f5f5f; /* Subtle top border for dark mode */
+  }
